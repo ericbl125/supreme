@@ -4,22 +4,37 @@ import re
 
 from bs4 import BeautifulSoup
 
-supreme = "https://www.supremenewyork.com/"
-# loop through the li
-# it is the second one
-response = requests.get(supreme)
-html = response.text
-soup = BeautifulSoup(html, "html.parser")
-preview_tag = soup.find_all(href=re.compile("previews"))[0].get("href")
-preview = urllib.parse.urljoin(supreme, preview_tag)
+# This could just be the scraper that takes the preview images from the website
+# The images are located at
+	# https://www.supremenewyork.com/previews/'season+year'/all
+# I think I can't go directly to the previews all but I can append /all after finding
+	# the previews page
 
+supreme = "https://www.supremenewyork.com/"
+
+def navigate_to_preview(supreme):
+	response = requests.get(supreme)
+	html = response.text
+	soup = BeautifulSoup(html, "html.parser")
+	preview_tag = soup.find_all(href=re.compile("previews"))[0].get("href")
+	return  urllib.parse.urljoin(supreme, preview_tag)
+
+def view_all(soup):
+	view_all = soup.find_all("a", string="view all")[0]
+	print(view_all)
+	atag = view_all.get("href")
+	print(atag)
+
+
+preview = navigate_to_preview(supreme)
+print(preview)
 response = requests.get(preview)
 html = response.text
 soup = BeautifulSoup(html, "html.parser")
 
+view_all(soup)
 
-print(preview_tag)
-print(preview)
+
 
 
 
