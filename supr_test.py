@@ -1,5 +1,6 @@
 import requests
 import urllib
+import re
 
 from bs4 import BeautifulSoup
 
@@ -9,18 +10,17 @@ supreme = "https://www.supremenewyork.com/"
 response = requests.get(supreme)
 html = response.text
 soup = BeautifulSoup(html, "html.parser")
-
-ultag = soup.select("ul")
-preview_tag = soup.select("li")[1]
-preview_link = lookbook.get("href")
-preview = urllib.parse.urljoin(supreme, preview_link)
+preview_tag = soup.find_all(href=re.compile("previews"))[0].get("href")
+preview = urllib.parse.urljoin(supreme, preview_tag)
 
 response = requests.get(preview)
 html = response.text
 soup = BeautifulSoup(html, "html.parser")
 
 
-print(lookbook)
+print(preview_tag)
+print(preview)
+
 
 
 #Get a file-like object from the request and copy it to a file. This will also avoid reading the whole thing into memory at once.
