@@ -1,17 +1,24 @@
 import sqlite3
 
+class DataConnect(sqlite3.Connection):
+	def cursor(self):
+		return super(DataConnect, self).cursor(data)
 
-# Database create a new seasons
-connection = sqlite3.connect("supreme_data.db")
-cursor = connection.cursor()
+	def close_db():
+		connection.close()
 
-def create_image_table():
-	cursor.execute("CREATE TABLE SupremeItemList "
-		+ "(itemName text, imageName text, dropDate text, price real ")
-	cursor.commit();
+	def commitDB():
+		connection.commit();
 
-def insert_image():
-	cursor.execute("INSERT INTO SupremeItemList VALUES(?, ?, ?, ?", ) # insert values after the comma
+class data(sqlite3.Cursor):
+	def create_image_table(self):
+		self.execute("CREATE TABLE SupremeItemList (season text, itemName text, imageName text, dropDate text, price real)")
 
+	def insert_image():
+		self.execute("INSERT INTO SupremeItemList VALUES(?, ?, ?, ?", ) # insert values after the comma
 
-connection.close()
+	def search_image_name(name):
+		return self.execute("SELECT FROM SupremeItemList WHERE imageName = ?", name)
+
+	#conn = sqlite3.connect("superemeData.db", factory=data.DataConnect)
+	
