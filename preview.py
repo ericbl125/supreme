@@ -92,7 +92,7 @@ time.sleep(1)
 soup = get_soup(view)
 find_images(soup)
 
-
+#This is me making a major change not really to the document
 
 
 
