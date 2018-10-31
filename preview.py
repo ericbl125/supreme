@@ -80,7 +80,7 @@ class preview:
 			urllib.request.urlretrieve(src_url, outpath)
 			time.sleep(.25)
 
-			# break 	# This break is here for testing
+			break 	# This break is here for testing
 
 	def get_path(self):
 		user_path =  os.path.join(os.path.expanduser("~"), "Documents", "Supreme", "Images") # sets according to users computer pathz
